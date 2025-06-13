@@ -1,5 +1,8 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { Resend } from "npm:resend@2.0.0";
+
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -25,31 +28,29 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Received contact form submission:", { name, email, subject });
 
-    // Here we'll send an email to zeedy028@gmail.com
-    // Since we don't have Resend set up yet, we'll log the details
-    // You'll need to set up Resend API key for actual email sending
-    
-    const emailContent = `
-      New Contact Form Submission:
-      
-      Name: ${name}
-      Email: ${email}
-      Subject: ${subject}
-      
-      Message:
-      ${message}
-      
-      Submitted at: ${new Date().toISOString()}
-    `;
+    // Send email to zeedy028@gmail.com using Resend
+    const emailResponse = await resend.emails.send({
+      from: "Contact Form <onboarding@resend.dev>",
+      to: ["zeedy028@gmail.com"],
+      subject: `New Contact: ${subject}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+        <hr>
+        <p><small>Submitted at: ${new Date().toISOString()}</small></p>
+      `,
+    });
 
-    console.log("Email content to send to zeedy028@gmail.com:", emailContent);
+    console.log("Email sent successfully:", emailResponse);
 
-    // For now, just return success. You'll need to implement actual email sending
-    // with Resend once you have the API key
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: "Contact form submitted successfully" 
+        message: "Contact form submitted successfully and email sent!" 
       }),
       {
         status: 200,

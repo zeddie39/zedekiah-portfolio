@@ -1,11 +1,40 @@
 
-import React from 'react';
-import { ChevronDown, Github, Linkedin, Mail } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ChevronDown, Github, Linkedin, Mail, Twitter, Instagram, Facebook, Youtube } from 'lucide-react';
+
+const techQuotes = [
+  "Technology is not just about convenience, it's about empowering human potential.",
+  "The future belongs to those who see possibilities before they become obvious.",
+  "Innovation distinguishes between a leader and a follower. - Steve Jobs",
+  "Technology is the campfire around which we tell our stories. - Laurie Anderson",
+  "The advance of technology is based on making it fit in so that you don't really even notice it.",
+  "Any sufficiently advanced technology is indistinguishable from magic. - Arthur C. Clarke",
+  "Technology is a useful servant but a dangerous master. - Christian Lous Lange"
+];
 
 const Hero = () => {
+  const [dailyQuote, setDailyQuote] = useState('');
+
+  useEffect(() => {
+    // Get daily quote based on current date
+    const today = new Date();
+    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+    const quoteIndex = dayOfYear % techQuotes.length;
+    setDailyQuote(techQuotes[quoteIndex]);
+  }, []);
+
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative px-4">
       <div className="text-center max-w-4xl mx-auto">
+        {/* Profile Photo Placeholder */}
+        <div className="mb-8 flex justify-center">
+          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400 p-1">
+            <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center">
+              <div className="text-white text-lg font-bold">VZ</div>
+            </div>
+          </div>
+        </div>
+
         <div className="mb-8">
           <h1 className="text-5xl md:text-7xl font-bold mb-4">
             <span className="block text-white mb-2">Vincent</span>
@@ -17,6 +46,14 @@ const Hero = () => {
             <span className="block mb-2">Developer • Innovator • CEO</span>
             <span className="text-lg text-purple-300">Ztech Electronics</span>
           </div>
+        </div>
+
+        {/* Daily Tech Quote */}
+        <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-sm rounded-lg p-6 mb-8 border border-purple-500/30">
+          <p className="text-gray-300 italic text-lg leading-relaxed">
+            "{dailyQuote}"
+          </p>
+          <p className="text-purple-400 text-sm mt-2">Quote of the Day</p>
         </div>
 
         <p className="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
@@ -39,10 +76,12 @@ const Hero = () => {
           </a>
         </div>
 
+        {/* Social Media Links */}
         <div className="flex justify-center space-x-6">
           <a
             href="mailto:zeedy028@gmail.com"
             className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
+            aria-label="Email"
           >
             <Mail size={24} />
           </a>
@@ -51,6 +90,7 @@ const Hero = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
+            aria-label="GitHub"
           >
             <Github size={24} />
           </a>
@@ -59,8 +99,45 @@ const Hero = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
+            aria-label="LinkedIn"
           >
             <Linkedin size={24} />
+          </a>
+          <a
+            href="https://twitter.com/vincentzedekiah"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
+            aria-label="Twitter"
+          >
+            <Twitter size={24} />
+          </a>
+          <a
+            href="https://instagram.com/vincentzedekiah"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
+            aria-label="Instagram"
+          >
+            <Instagram size={24} />
+          </a>
+          <a
+            href="https://facebook.com/vincentzedekiah"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
+            aria-label="Facebook"
+          >
+            <Facebook size={24} />
+          </a>
+          <a
+            href="https://youtube.com/@vincentzedekiah"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
+            aria-label="YouTube"
+          >
+            <Youtube size={24} />
           </a>
         </div>
       </div>
