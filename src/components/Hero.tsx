@@ -18,7 +18,8 @@ const Hero = () => {
   useEffect(() => {
     // Get daily quote based on current date
     const today = new Date();
-    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+    const startOfYear = new Date(today.getFullYear(), 0, 0);
+    const dayOfYear = Math.floor((today.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24));
     const quoteIndex = dayOfYear % techQuotes.length;
     setDailyQuote(techQuotes[quoteIndex]);
   }, []);
