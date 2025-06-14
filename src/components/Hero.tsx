@@ -24,7 +24,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative px-4 py-20 md:py-0">
+    <section id="home" className="min-h-screen flex items-start justify-center relative px-4 pt-32 pb-16 md:pt-40 md:pb-20">
       <div className="flex flex-col md:flex-row items-start gap-8 md:gap-16 max-w-6xl mx-auto">
         {/* Profile Photo Placeholder */}
         <div className="flex-shrink-0">
