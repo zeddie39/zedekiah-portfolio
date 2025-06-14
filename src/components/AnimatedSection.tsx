@@ -55,7 +55,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className =
   };
 
   return (
-    <div ref={sectionRef} className={`transition-all duration-1000 ease-out ${getAnimationClasses()} ${className}`}>
+    <div ref={sectionRef} className={`transition-all duration-[1500ms] ease-out ${getAnimationClasses()} ${className}`}>
       {children}
     </div>
   );
