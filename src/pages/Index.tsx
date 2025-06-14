@@ -8,6 +8,7 @@ import Testimonials from '@/components/Testimonials';
 import Resume from '@/components/Resume';
 import Contact from '@/components/Contact';
 import Navigation from '@/components/Navigation';
+import AnimatedSection from '@/components/AnimatedSection';
 
 const Index = () => {
   return (
@@ -22,12 +23,24 @@ const Index = () => {
         </div>
         
         <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Testimonials />
-        <Resume />
-        <Contact />
+        <AnimatedSection animation="fade-in">
+          <About />
+        </AnimatedSection>
+        <AnimatedSection animation="slide-in-from-left">
+          <Skills />
+        </AnimatedSection>
+        <AnimatedSection animation="slide-in-from-right">
+          <Projects />
+        </AnimatedSection>
+        <AnimatedSection animation="fade-in">
+          <Testimonials />
+        </AnimatedSection>
+        <AnimatedSection animation="slide-in-from-left">
+          <Resume />
+        </AnimatedSection>
+        <AnimatedSection animation="scale-in">
+          <Contact />
+        </AnimatedSection>
       </div>
     </div>
   );
