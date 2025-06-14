@@ -80,7 +80,9 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-white font-semibold">Phone</p>
-                    <p className="text-gray-300">+254 757 756 763</p>
+                    <a href="https://wa.me/254757756763" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
+                      +254 757 756 763
+                    </a>
                   </div>
                 </div>
                 
@@ -90,7 +92,9 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-white font-semibold">Email</p>
-                    <p className="text-gray-300">zeedy028@gmail.com</p>
+                    <a href="mailto:zeedy028@gmail.com" className="text-gray-300 hover:text-white transition-colors">
+                      zeedy028@gmail.com
+                    </a>
                   </div>
                 </div>
                 
@@ -100,7 +104,9 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-white font-semibold">Location</p>
-                    <p className="text-gray-300">Kitale, Kenya</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Kitale%2C+Kenya" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
+                      Kitale, Kenya
+                    </a>
                   </div>
                 </div>
               </div>
