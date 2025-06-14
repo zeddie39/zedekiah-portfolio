@@ -2,7 +2,9 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const resendApiKey = Deno.env.get("RESEND_API_KEY");
+
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -18,6 +20,17 @@ interface ContactEmailRequest {
 }
 
 const handler = async (req: Request): Promise<Response> => {
+  if (!resend) {
+    console.error("Resend API key is not set. Email function is disabled.");
+    return new Response(
+      JSON.stringify({ error: "Email service is not configured correctly." }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      }
+    );
+  }
+  
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -73,3 +86,4 @@ const handler = async (req: Request): Promise<Response> => {
 };
 
 serve(handler);
+
