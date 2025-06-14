@@ -10,7 +10,7 @@ interface Testimonial {
   role?: string;
   company?: string;
   message: string;
-  rating: number;
+  rating: number | null;
   created_at: string;
 }
 
@@ -51,15 +51,21 @@ const Testimonials = () => {
     setIsLoading(true);
 
     try {
-      const { error } = await supabase
+      const { data: newTestimonial, error } = await supabase
         .from('testimonials')
-        .insert([formData]);
+        .insert([formData])
+        .select()
+        .single();
 
       if (error) throw error;
+      
+      if (newTestimonial) {
+        setTestimonials(prevTestimonials => [newTestimonial, ...prevTestimonials]);
+      }
 
       toast({
         title: "Thank you for your testimonial!",
-        description: "Your testimonial has been submitted and is pending approval.",
+        description: "It's now live on the site while we review it.",
       });
 
       setFormData({ name: '', role: '', company: '', message: '', rating: 5 });
@@ -76,12 +82,13 @@ const Testimonials = () => {
     }
   };
 
-  const renderStars = (rating: number) => {
+  const renderStars = (rating: number | null) => {
+    const numericRating = rating || 0;
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
         size={16}
-        className={i < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}
+        className={i < numericRating ? 'text-yellow-400 fill-current' : 'text-gray-300'}
       />
     ));
   };
