@@ -156,7 +156,7 @@ const Hero = () => {
               <Github size={24} />
             </a>
             <a
-              href="https://linkedin.com/in/vincentzedekiah"
+              href="https://www.linkedin.com/in/vincent-ombati-8b05b422b/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
@@ -165,7 +165,7 @@ const Hero = () => {
               <Linkedin size={24} />
             </a>
             <a
-              href="https://twitter.com/vincentzedekiah"
+              href="https://x.com/MapesaZeddy"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
@@ -174,7 +174,7 @@ const Hero = () => {
               <Twitter size={24} />
             </a>
             <a
-              href="https://instagram.com/vincentzedekiah"
+              href="https://www.instagram.com/vincentzeddie/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
@@ -183,7 +183,7 @@ const Hero = () => {
               <Instagram size={24} />
             </a>
             <a
-              href="https://facebook.com/vincentzedekiah"
+              href="https://www.facebook.com/vincent.zedie.5/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
@@ -192,7 +192,7 @@ const Hero = () => {
               <Facebook size={24} />
             </a>
             <a
-              href="https://youtube.com/@vincentzedekiah"
+              href="https://www.youtube.com/@zedekiahTunes"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
