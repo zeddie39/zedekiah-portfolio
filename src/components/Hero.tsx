@@ -1,5 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Github, Linkedin, Mail, Twitter, Instagram, Facebook, Youtube } from 'lucide-react';
+import { ChevronDown, Github, Linkedin, Mail, Twitter, Instagram, Facebook, Youtube, PlayCircle, Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const techQuotes = [
   "Technology is not just about convenience, it's about empowering human potential.",
@@ -13,6 +16,7 @@ const techQuotes = [
 
 const Hero = () => {
   const [dailyQuote, setDailyQuote] = useState('');
+  const [isNarrating, setIsNarrating] = useState(false);
 
   useEffect(() => {
     // Get daily quote based on current date
@@ -22,6 +26,44 @@ const Hero = () => {
     const quoteIndex = dayOfYear % techQuotes.length;
     setDailyQuote(techQuotes[quoteIndex]);
   }, []);
+
+  const handleNarrateQuote = async () => {
+    if (isNarrating || !dailyQuote) return;
+    setIsNarrating(true);
+    toast.info("Generating audio...");
+
+    try {
+      const { data, error } = await supabase.functions.invoke('elevenlabs-tts', {
+        body: { text: dailyQuote },
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+      
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      
+      if (data.audioContent) {
+        const audio = new Audio(`data:audio/mpeg;base64,${data.audioContent}`);
+        audio.play();
+        audio.onended = () => setIsNarrating(false);
+        audio.onerror = () => {
+          toast.error("Could not play audio.");
+          setIsNarrating(false);
+        }
+      } else {
+        setIsNarrating(false);
+        throw new Error("No audio content received.");
+      }
+
+    } catch (error: any) {
+      console.error('Error narrating quote:', error);
+      toast.error(error.message || 'Failed to narrate quote.');
+      setIsNarrating(false);
+    }
+  };
 
   return (
     <section id="home" className="min-h-screen flex items-start justify-center relative px-4 pt-32 pb-16 md:pt-40 md:pb-20">
@@ -52,10 +94,24 @@ const Hero = () => {
 
           {/* Daily Tech Quote */}
           <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-sm rounded-lg p-6 mb-8 border border-purple-500/30">
-            <p className="text-gray-300 italic text-lg leading-relaxed">
+            <p className="text-gray-300 italic text-lg leading-relaxed mb-4">
               "{dailyQuote}"
             </p>
-            <p className="text-purple-400 text-sm mt-2">Quote of the Day</p>
+            <div className="flex justify-between items-center">
+              <p className="text-purple-400 text-sm">Quote of the Day</p>
+              <button
+                onClick={handleNarrateQuote}
+                disabled={isNarrating}
+                className="text-purple-400 hover:text-white transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Narrate quote"
+              >
+                {isNarrating ? (
+                  <Loader2 className="w-6 h-6 animate-spin" />
+                ) : (
+                  <PlayCircle className="w-6 h-6" />
+                )}
+              </button>
+            </div>
           </div>
 
           <p className="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl leading-relaxed">
