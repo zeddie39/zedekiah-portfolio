@@ -15,27 +15,37 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <Navigation />
       <div className="relative">
-        {/* Background Effects Removed */}
-        
-        <Hero />
-        <AnimatedSection animation="fade-in">
-          <About />
-        </AnimatedSection>
-        <AnimatedSection animation="slide-in-from-left">
-          <Skills />
-        </AnimatedSection>
-        <AnimatedSection animation="slide-in-from-right">
-          <Projects />
-        </AnimatedSection>
-        <AnimatedSection animation="fade-in">
-          <Testimonials />
-        </AnimatedSection>
-        <AnimatedSection animation="slide-in-from-left">
-          <Resume />
-        </AnimatedSection>
-        <AnimatedSection animation="scale-in">
-          <Contact />
-        </AnimatedSection>
+        <div id="home"><Hero /></div>
+        <div id="about">
+          <AnimatedSection animation="fade-in">
+            <About />
+          </AnimatedSection>
+        </div>
+        <div id="skills">
+          <AnimatedSection animation="slide-in-from-left">
+            <Skills />
+          </AnimatedSection>
+        </div>
+        <div id="projects">
+          <AnimatedSection animation="slide-in-from-right">
+            <Projects />
+          </AnimatedSection>
+        </div>
+        <div id="testimonials">
+          <AnimatedSection animation="fade-in">
+            <Testimonials />
+          </AnimatedSection>
+        </div>
+        <div id="resume">
+          <AnimatedSection animation="slide-in-from-left">
+            <Resume />
+          </AnimatedSection>
+        </div>
+        <div id="contact">
+          <AnimatedSection animation="scale-in">
+            <Contact />
+          </AnimatedSection>
+        </div>
       </div>
     </div>
   );
