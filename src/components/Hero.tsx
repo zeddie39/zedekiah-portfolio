@@ -147,7 +147,7 @@ const Hero = () => {
               <Mail size={24} />
             </a>
             <a
-              href="https://github.com/vincentzedekiah"
+              href="https://github.com/zeddie39"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
