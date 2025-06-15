@@ -29,12 +29,18 @@ const Navigation = () => {
 
   const handleLinkClick = (hash: string) => {
     setIsOpen(false);
-    setTimeout(() => {
-      const element = document.getElementById(hash.substring(1));
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 0);
+    if (location.pathname !== '/') {
+      // If we are on a different page, navigate to home and then scroll
+      window.location.href = `/${hash}`;
+    } else {
+      // If we are on the home page, just scroll
+      setTimeout(() => {
+        const element = document.getElementById(hash.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 0);
+    }
   };
   
   return (
@@ -49,16 +55,33 @@ const Navigation = () => {
           
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className="text-gray-300 hover:text-white transition-colors duration-200 hover:underline underline-offset-4"
-                onClick={() => item.href.includes('#') && handleLinkClick(item.href.split('#')[1] ? '#' + item.href.split('#')[1] : '')}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isHashLink = item.href.includes('#');
+              if (isHashLink) {
+                return (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-gray-300 hover:text-white transition-colors duration-200 hover:underline underline-offset-4"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLinkClick(item.href.split('#')[1] ? '#' + item.href.split('#')[1] : '');
+                    }}
+                  >
+                    {item.name}
+                  </a>
+                );
+              }
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-gray-300 hover:text-white transition-colors duration-200 hover:underline underline-offset-4"
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Mobile Menu Button */}
@@ -74,21 +97,35 @@ const Navigation = () => {
         {isOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-slate-800/90 rounded-lg backdrop-blur-md">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-200"
-                  onClick={() => {
-                    if (item.href.includes('#')) {
-                      handleLinkClick(item.href.split('#')[1] ? '#' + item.href.split('#')[1] : '');
-                    }
-                    setIsOpen(false);
-                  }}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                const isHashLink = item.href.includes('#');
+                if (isHashLink) {
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-200"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleLinkClick(item.href.split('#')[1] ? '#' + item.href.split('#')[1] : '');
+                        setIsOpen(false);
+                      }}
+                    >
+                      {item.name}
+                    </a>
+                  );
+                }
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-200"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}

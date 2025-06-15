@@ -1,57 +1,10 @@
 
 import React from 'react';
 import { ExternalLink, Github, ArrowRight } from 'lucide-react';
+import { projects } from '@/data/projects';
+import { Link } from 'react-router-dom';
 
 const Projects = () => {
-  const projects = [
-    {
-      title: "Ztech Electronics",
-      description: "Full repair + e-commerce platform with AI support, FixMate system, and buyer/seller integration. Built for East Africa's electronics market.",
-      tech: ["React", "Node.js", "MongoDB", "AI/NLP", "JWT"],
-      image: "/placeholder.svg",
-      featured: true,
-      status: "Live Platform"
-    },
-    {
-      title: "ESP32 WiFi Control",
-      description: "IoT dashboard for home automation with real-time control and monitoring capabilities.",
-      tech: ["Arduino C++", "React", "WebSockets", "ESP32"],
-      image: "/placeholder.svg",
-      github: "https://github.com/vincentzedekiah/esp32-control",
-      status: "Open Source"
-    },
-    {
-      title: "Wakilisha Band Website",
-      description: "Music portfolio site with events management, media gallery, and fan engagement features.",
-      tech: ["React", "Styled Components", "Media APIs"],
-      image: "/placeholder.svg",
-      live: "https://wakilisha.com",
-      status: "Live Site"
-    },
-    {
-      title: "AI & AR Tutor",
-      description: "Educational platform powered by AI and AR for immersive learning experiences in computer science.",
-      tech: ["TensorFlow.js", "Three.js", "React", "WebXR"],
-      image: "/placeholder.svg",
-      status: "In Development"
-    },
-    {
-      title: "Computer Science Quiz App",
-      description: "Gamified web application for interactive learning with progress tracking and adaptive difficulty.",
-      tech: ["React", "Node.js", "REST API", "MongoDB"],
-      image: "/placeholder.svg",
-      github: "https://github.com/vincentzedekiah/cs-quiz",
-      status: "Beta"
-    },
-    {
-      title: "Robotics Projects",
-      description: "Collection of DIY robots with sensors, movement, and IoT capabilities using Arduino and ESP32.",
-      tech: ["Arduino C++", "Sensors", "IoT", "React Dashboard"],
-      image: "/placeholder.svg",
-      status: "Portfolio"
-    }
-  ];
-
   return (
     <section id="projects" className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
@@ -77,9 +30,11 @@ const Projects = () => {
               <div className="grid md:grid-cols-3 gap-8 items-center">
                 <div className="md:col-span-2 space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors duration-200">
-                      {project.title}
-                    </h3>
+                    <Link to={`/projects/${project.slug}`}>
+                      <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors duration-200">
+                        {project.title}
+                      </h3>
+                    </Link>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                       project.status === 'Live Platform' ? 'bg-green-500/20 text-green-300 border border-green-500/30' :
                       project.status === 'Live Site' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' :
@@ -136,7 +91,7 @@ const Projects = () => {
                   <div className="aspect-video bg-slate-700/50 rounded-xl border border-slate-600/50 flex items-center justify-center group-hover:border-purple-500/50 transition-all duration-300">
                     <div className="text-gray-500">
                       <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
-                        <ArrowRight className="text-white" size={24} />
+                        {project.icon || <ArrowRight className="text-white" size={24} />}
                       </div>
                     </div>
                   </div>
