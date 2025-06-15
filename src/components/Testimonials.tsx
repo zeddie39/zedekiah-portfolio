@@ -39,6 +39,28 @@ const Testimonials = () => {
 
   useEffect(() => {
     fetchTestimonials();
+
+    const channel = supabase
+      .channel('testimonials-realtime')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'testimonials' },
+        (payload) => {
+          const newTestimonial = payload.new as Testimonial;
+          setTestimonials((prevTestimonials) => {
+            // Avoid adding duplicates if we already have it from optimistic update
+            if (prevTestimonials.some((t) => t.id === newTestimonial.id)) {
+              return prevTestimonials;
+            }
+            return [newTestimonial, ...prevTestimonials];
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchTestimonials = async () => {
