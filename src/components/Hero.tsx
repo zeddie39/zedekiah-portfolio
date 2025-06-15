@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronDown, Github, Linkedin, Mail, Twitter, Instagram, Facebook, Youtube, PlayCircle, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import Globe from './Globe';
 
 const techQuotes = [
   "Technology is not just about convenience, it's about empowering human potential.",
@@ -67,8 +68,9 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-start justify-center relative px-4 pt-32 pb-16 md:pt-40 md:pb-20">
-      <div className="flex flex-col md:flex-row items-start gap-8 md:gap-16 max-w-6xl mx-auto">
+    <section id="home" className="min-h-screen flex items-center justify-center relative px-4 pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden">
+      <Globe />
+      <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-16 max-w-6xl mx-auto">
         {/* Profile Photo Placeholder */}
         <div className="flex-shrink-0">
           <div className="w-40 h-40 md:w-48 md:h-48 rounded-full bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400 p-1">
@@ -79,7 +81,7 @@ const Hero = () => {
         </div>
 
         {/* Text Content */}
-        <div className="text-left">
+        <div className="text-center md:text-left">
           <div className="mb-8">
             <h1 className="text-5xl md:text-7xl font-bold mb-4">
               <span className="block text-white mb-2">Vincent</span>
@@ -94,7 +96,7 @@ const Hero = () => {
           </div>
 
           {/* Daily Tech Quote */}
-          <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-sm rounded-lg p-6 mb-8 border border-purple-500/30">
+          <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-sm rounded-lg p-6 mb-8 border border-purple-500/30 max-w-2xl mx-auto md:mx-0">
             <p className="text-gray-300 italic text-lg leading-relaxed mb-4">
               "{dailyQuote}"
             </p>
@@ -115,12 +117,12 @@ const Hero = () => {
             </div>
           </div>
 
-          <p className="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl leading-relaxed mx-auto md:mx-0">
             Building the future of technology in East Africa. From robotics to AI, 
             cybersecurity to e-commerce - crafting solutions that serve humanity.
           </p>
 
-          <div className="flex justify-start space-x-6 mb-12">
+          <div className="flex justify-center md:justify-start space-x-6 mb-12">
             <a
               href="#contact"
               className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-semibold"
@@ -136,7 +138,7 @@ const Hero = () => {
           </div>
 
           {/* Social Media Links */}
-          <div className="flex justify-start space-x-6">
+          <div className="flex justify-center md:justify-start space-x-6">
             <a
               href="mailto:zeedy028@gmail.com"
               className="text-gray-400 hover:text-purple-400 transition-colors duration-200"
@@ -202,7 +204,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
         <ChevronDown className="text-gray-400" size={32} />
       </div>
     </section>
