@@ -5,21 +5,15 @@ import type { Testimonial } from './Testimonials';
 
 interface TestimonialListProps {
   testimonials: Testimonial[];
-  isAdmin: boolean;
-  approveTestimonial: (id: string) => Promise<void>;
-  deleteTestimonial: (id: string) => Promise<void>;
 }
 
-const TestimonialList = ({ testimonials, isAdmin, approveTestimonial, deleteTestimonial }: TestimonialListProps) => {
+const TestimonialList = ({ testimonials }: TestimonialListProps) => {
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
       {testimonials.map((testimonial) => (
         <TestimonialCard 
           key={testimonial.id} 
           testimonial={testimonial} 
-          isAdmin={isAdmin}
-          approveTestimonial={approveTestimonial}
-          deleteTestimonial={deleteTestimonial}
         />
       ))}
     </div>

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -35,24 +36,17 @@ const Testimonials = () => {
     rating: 5
   });
   const { toast } = useToast();
-  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     fetchTestimonials();
-  }, [isAdmin]);
+  }, []);
 
   const fetchTestimonials = async () => {
     try {
-      let query = supabase
+      const { data, error } = await supabase
         .from('testimonials')
         .select('*')
         .order('created_at', { ascending: false });
-
-      if (!isAdmin) {
-        query = query.eq('approved', true);
-      }
-      
-      const { data, error } = await query;
 
       if (error) throw error;
       setTestimonials(data || []);
@@ -61,69 +55,26 @@ const Testimonials = () => {
     }
   };
 
-  const approveTestimonial = async (id: string) => {
-    const originalTestimonials = testimonials;
-    setTestimonials(testimonials.map(t => t.id === id ? { ...t, approved: true } : t));
-    
-    try {
-        const { error } = await supabase
-            .from('testimonials')
-            .update({ approved: true })
-            .eq('id', id);
-
-        if (error) throw error;
-        toast({ title: "Testimonial approved!" });
-    } catch (error) {
-        setTestimonials(originalTestimonials);
-        console.error('Error approving testimonial:', error);
-        toast({ title: "Error", description: "Failed to approve testimonial.", variant: "destructive" });
-    }
-  };
-
-  const deleteTestimonial = async (id: string) => {
-    const originalTestimonials = testimonials;
-    setTestimonials(testimonials.filter(t => t.id !== id));
-    
-    try {
-        const { error } = await supabase
-            .from('testimonials')
-            .delete()
-            .eq('id', id);
-
-        if (error) throw error;
-        toast({ title: "Testimonial deleted." });
-    } catch (error) {
-        setTestimonials(originalTestimonials);
-        console.error('Error deleting testimonial:', error);
-        toast({ title: "Error", description: "Failed to delete testimonial.", variant: "destructive" });
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const { error } = await supabase
+      const testimonialData = { ...formData, approved: true };
+      const { data, error } = await supabase
         .from('testimonials')
-        .insert([formData]);
+        .insert([testimonialData])
+        .select();
 
       if (error) throw error;
       
-      const newTestimonial: Testimonial = {
-        ...formData,
-        id: `temp-${Date.now()}`,
-        created_at: new Date().toISOString(),
-        approved: false,
-      };
-      // In admin mode, new testimonial will appear at the top. Otherwise, it will be hidden until approved.
-      if(isAdmin) {
-        setTestimonials(prevTestimonials => [newTestimonial, ...prevTestimonials]);
+      if (data) {
+        setTestimonials(prevTestimonials => [data[0], ...prevTestimonials]);
       }
 
       toast({
         title: "Thank you for your testimonial!",
-        description: "It has been submitted for review.",
+        description: "It has been published on the site.",
       });
 
       setFormData({ name: '', role: '', company: '', message: '', rating: 5 });
@@ -152,20 +103,8 @@ const Testimonials = () => {
           </p>
         </div>
 
-        <div className="text-right mb-4">
-          <button
-            onClick={() => setIsAdmin(!isAdmin)}
-            className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
-          >
-            {isAdmin ? 'Exit Admin Mode' : 'Admin Mode'}
-          </button>
-        </div>
-
         <TestimonialList 
           testimonials={testimonials} 
-          isAdmin={isAdmin}
-          approveTestimonial={approveTestimonial}
-          deleteTestimonial={deleteTestimonial}
         />
 
         <div className="text-center">
