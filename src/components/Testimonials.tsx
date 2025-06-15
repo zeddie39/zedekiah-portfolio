@@ -13,6 +13,7 @@ export interface Testimonial {
   message: string;
   rating: number | null;
   created_at: string;
+  approved?: boolean | null;
 }
 
 export type TestimonialFormData = {
@@ -60,21 +61,23 @@ const Testimonials = () => {
     setIsLoading(true);
 
     try {
-      const { data: newTestimonial, error } = await supabase
+      const { error } = await supabase
         .from('testimonials')
-        .insert([formData])
-        .select()
-        .single();
+        .insert([formData]);
 
       if (error) throw error;
       
-      if (newTestimonial) {
-        setTestimonials(prevTestimonials => [newTestimonial, ...prevTestimonials]);
-      }
+      const newTestimonial: Testimonial = {
+        ...formData,
+        id: `temp-${Date.now()}`,
+        created_at: new Date().toISOString(),
+        approved: false,
+      };
+      setTestimonials(prevTestimonials => [newTestimonial, ...prevTestimonials]);
 
       toast({
         title: "Thank you for your testimonial!",
-        description: "It's now live on the site while we review it.",
+        description: "It has been submitted for review.",
       });
 
       setFormData({ name: '', role: '', company: '', message: '', rating: 5 });
