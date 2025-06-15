@@ -10,6 +10,7 @@ import Resume from '@/components/Resume';
 import Contact from '@/components/Contact';
 import Navigation from '@/components/Navigation';
 import AnimatedSection from '@/components/AnimatedSection';
+import Services from '@/components/Services';
 
 const Index = () => {
   const location = useLocation();
@@ -33,6 +34,11 @@ const Index = () => {
         <div id="about">
           <AnimatedSection animation="fade-in">
             <About />
+          </AnimatedSection>
+        </div>
+        <div id="services">
+          <AnimatedSection animation="slide-in-from-right">
+            <Services />
           </AnimatedSection>
         </div>
         <div id="skills">
