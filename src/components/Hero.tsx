@@ -37,7 +37,7 @@ const Hero = () => {
       });
 
       if (error) {
-        throw new Error(error.message);
+        throw error; // Throw the whole error object
       }
       
       if (data.error) {
@@ -59,6 +59,8 @@ const Hero = () => {
 
     } catch (error: any) {
       console.error('Error narrating quote:', error);
+      // Log the full error object for more details
+      console.error('Full error details:', JSON.stringify(error, null, 2));
       toast.error(error.message || 'Failed to narrate quote.');
       setIsNarrating(false);
     }
