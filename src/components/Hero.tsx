@@ -38,11 +38,14 @@ const Hero = () => {
       });
 
       if (error) {
-        throw error; // Throw the whole error object
+        throw error; // This is for network/platform errors
       }
       
       if (data.error) {
-        throw new Error(data.error);
+        // This is for application-level errors returned by the function
+        toast.error(data.error);
+        setIsNarrating(false);
+        return;
       }
       
       if (data.audioContent) {
@@ -60,8 +63,6 @@ const Hero = () => {
 
     } catch (error: any) {
       console.error('Error narrating quote:', error);
-      // Log the full error object for more details
-      console.error('Full error details:', JSON.stringify(error, null, 2));
       toast.error(error.message || 'Failed to narrate quote.');
       setIsNarrating(false);
     }

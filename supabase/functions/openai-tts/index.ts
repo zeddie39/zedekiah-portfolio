@@ -45,6 +45,17 @@ serve(async (req: Request) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('OpenAI API Error:', errorText);
+      try {
+        const openAIError = JSON.parse(errorText);
+        if (openAIError.error) {
+          if (openAIError.error.code === 'insufficient_quota') {
+            throw new Error("You've exceeded your current quota. Please check your plan and billing details on OpenAI.");
+          }
+          throw new Error(openAIError.error.message || 'An unknown error occurred with OpenAI.');
+        }
+      } catch (e) {
+        // Parsing failed, fall back to raw text
+      }
       throw new Error(`OpenAI API error: ${errorText}`)
     }
 
@@ -60,10 +71,12 @@ serve(async (req: Request) => {
     )
   } catch (error) {
     console.error('Error in openai-tts function:', error.message);
+    // Always return 200, but with an error object if something went wrong.
+    // The client will check for the 'error' property in the response.
     return new Response(
       JSON.stringify({ error: error.message }),
       {
-        status: 500,
+        status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       },
     )
