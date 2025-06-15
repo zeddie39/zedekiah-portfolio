@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Github, Linkedin, Mail, Twitter, Instagram, Facebook, Youtube, PlayCircle, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -33,7 +32,7 @@ const Hero = () => {
     toast.info("Generating audio...");
 
     try {
-      const { data, error } = await supabase.functions.invoke('elevenlabs-tts', {
+      const { data, error } = await supabase.functions.invoke('openai-tts', {
         body: { text: dailyQuote },
       });
 
