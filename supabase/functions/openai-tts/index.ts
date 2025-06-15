@@ -41,14 +41,9 @@ serve(async (req: Request) => {
     })
 
     if (!response.ok) {
-      const errorData = await response.text();
-      console.error('OpenAI API Error:', errorData);
-      try {
-        const parsedError = JSON.parse(errorData);
-        throw new Error(parsedError.error?.message || 'Failed to generate speech from OpenAI.')
-      } catch (e) {
-        throw new Error('Failed to generate speech and parse error from OpenAI.')
-      }
+      const errorText = await response.text();
+      console.error('OpenAI API Error:', errorText);
+      throw new Error(`OpenAI API error: ${errorText}`)
     }
 
     // Convert audio buffer to base64
@@ -74,4 +69,3 @@ serve(async (req: Request) => {
     )
   }
 })
-
