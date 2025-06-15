@@ -50,7 +50,7 @@ const Skills = () => {
             Technical <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Skills</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            A comprehensive toolkit for building innovative solutions
+            A comprehensive toolkit for building innovative solutions. Hover over a category to see more.
           </p>
         </div>
 
@@ -58,24 +58,29 @@ const Skills = () => {
           {skillCategories.map((category, index) => (
             <div
               key={index}
-              className="group bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105"
+              className="group bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 hover:border-purple-500/50 transition-all duration-300"
             >
               <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${category.color} flex items-center justify-center text-white mb-6 group-hover:shadow-lg transition-all duration-300`}>
                 {category.icon}
               </div>
               
-              <h3 className="text-xl font-bold text-white mb-4">{category.title}</h3>
+              <h3 className="text-xl font-bold text-white">{category.title}</h3>
               
-              <div className="space-y-2">
-                {category.skills.map((skill, skillIndex) => (
-                  <div
-                    key={skillIndex}
-                    className="flex items-center justify-between p-2 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 transition-colors duration-200"
-                  >
-                    <span className="text-gray-300">{skill}</span>
-                    <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400"></div>
-                  </div>
-                ))}
+              <div className="overflow-hidden transition-all duration-500 ease-in-out max-h-0 opacity-0 group-hover:max-h-96 group-hover:opacity-100">
+                <div className="space-y-2 pt-4">
+                  {category.skills.map((skill, skillIndex) => (
+                    <div
+                      key={skillIndex}
+                      className="flex items-center justify-between p-2 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 transition-all duration-300 transform opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0"
+                      style={{
+                        transitionDelay: `${200 + skillIndex * 75}ms`,
+                      }}
+                    >
+                      <span className="text-gray-300">{skill}</span>
+                      <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400"></div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
