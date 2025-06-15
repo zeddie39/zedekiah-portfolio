@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { projects } from '@/data/projects';
+import { projects } from '@/data/projects.tsx';
 import Navigation from '@/components/Navigation';
 import NotFound from '@/pages/NotFound';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ExternalLink, Github, ArrowRight } from 'lucide-react';
-import { projects } from '@/data/projects';
+import { projects } from '@/data/projects.tsx';
 import { Link } from 'react-router-dom';
 
 const Projects = () => {
