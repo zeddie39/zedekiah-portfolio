@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Send, Phone, Mail, MapPin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -205,7 +206,7 @@ const Contact = () => {
         {/* Footer */}
         <div className="text-center mt-16 pt-8 border-t border-slate-700/50">
           <p className="text-gray-400">
-            Vincent Zedekiah • © 2025
+            Vincent Zedekiah • © 2025 All rights reserved
           </p>
         </div>
       </div>
