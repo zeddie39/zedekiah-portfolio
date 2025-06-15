@@ -27,43 +27,42 @@ const Hero = () => {
     setDailyQuote(techQuotes[quoteIndex]);
   }, []);
 
-  const handleNarrateQuote = async () => {
+  const handleNarrateQuote = () => {
     if (isNarrating || !dailyQuote) return;
+
+    // Check if Speech Synthesis is supported
+    if (!('speechSynthesis' in window)) {
+      toast.error("Sorry, your browser doesn't support text-to-speech.");
+      return;
+    }
+    
     setIsNarrating(true);
-    toast.info("Generating audio...");
-
+    
     try {
-      const { data, error } = await supabase.functions.invoke('openai-tts', {
-        body: { text: dailyQuote },
-      });
+      // Stop any previous speech to prevent overlap
+      window.speechSynthesis.cancel();
+      
+      const utterance = new SpeechSynthesisUtterance(dailyQuote);
+      
+      utterance.onstart = () => {
+        toast.info("Narrating quote...");
+      };
 
-      if (error) {
-        throw error; // This is for network/platform errors
-      }
-      
-      if (data.error) {
-        // This is for application-level errors returned by the function
-        toast.error(data.error);
+      utterance.onend = () => {
         setIsNarrating(false);
-        return;
-      }
+      };
       
-      if (data.audioContent) {
-        const audio = new Audio(`data:audio/mpeg;base64,${data.audioContent}`);
-        audio.play();
-        audio.onended = () => setIsNarrating(false);
-        audio.onerror = () => {
-          toast.error("Could not play audio.");
-          setIsNarrating(false);
-        }
-      } else {
+      utterance.onerror = (event) => {
+        console.error('SpeechSynthesisUtterance.onerror', event);
+        toast.error("An error occurred during narration.");
         setIsNarrating(false);
-        throw new Error("No audio content received.");
-      }
+      };
+      
+      window.speechSynthesis.speak(utterance);
 
     } catch (error: any) {
-      console.error('Error narrating quote:', error);
-      toast.error(error.message || 'Failed to narrate quote.');
+      console.error('Error narrating quote with Web Speech API:', error);
+      toast.error('Failed to narrate quote.');
       setIsNarrating(false);
     }
   };
