@@ -38,12 +38,12 @@ const Blog = () => {
   const posts = data?.posts;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Navigation />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <header className="pt-16 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">My Blog</h1>
-          <p className="mt-4 text-lg text-gray-300">Thoughts, stories, and ideas.</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-primary">My Blog</h1>
+          <p className="mt-4 text-lg text-muted-foreground">Thoughts, stories, and ideas.</p>
         </header>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -58,11 +58,11 @@ const Blog = () => {
               </div>
             ))
           ) : error ? (
-            <p className="col-span-full text-center text-red-400">Error loading posts. Please try again later.</p>
+            <p className="col-span-full text-center text-destructive">Error loading posts. Please try again later.</p>
           ) : posts && posts.length > 0 ? (
             posts.map((post) => <PostCard key={post.id} post={post} />)
           ) : (
-            <p className="col-span-full text-center text-gray-400">No posts yet. Stay tuned!</p>
+            <p className="col-span-full text-center text-muted-foreground">No posts yet. Stay tuned!</p>
           )}
         </div>
 
@@ -81,7 +81,7 @@ const Blog = () => {
                   />
                 </PaginationItem>
                 <PaginationItem>
-                  <span className="text-gray-300 px-4 py-2 text-sm">
+                  <span className="px-4 py-2 text-sm text-muted-foreground">
                     Page {currentPage} of {totalPages}
                   </span>
                 </PaginationItem>
