@@ -16,30 +16,36 @@ interface ContactEmailRequest {
 }
 
 const handler = async (req: Request): Promise<Response> => {
+  console.log("send-contact-email function invoked.");
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
+    console.log("Handling OPTIONS request.");
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    console.log("Attempting to get RESEND_API_KEY from environment variables.");
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
 
     if (!resendApiKey) {
-      console.error("RESEND_API_KEY is not set. Email function is disabled.");
+      console.error("CRITICAL: RESEND_API_KEY is not set in environment. Email function is disabled.");
       return new Response(
-        JSON.stringify({ error: "Email service is not configured correctly." }),
+        JSON.stringify({ error: "Email service is not configured correctly. API key missing." }),
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
         }
       );
     }
+    console.log("RESEND_API_KEY found. Initializing Resend client.");
     
     const resend = new Resend(resendApiKey);
 
+    console.log("Parsing request body.");
     const { name, email, subject, message }: ContactEmailRequest = await req.json();
 
     console.log("Received contact form submission:", { name, email, subject });
+    console.log("Attempting to send email via Resend...");
 
     // Send email to zeedy028@gmail.com using Resend
     const emailResponse = await resend.emails.send({
@@ -58,7 +64,7 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Email sent successfully:", emailResponse);
+    console.log("Resend API call successful. Response:", JSON.stringify(emailResponse));
 
     return new Response(
       JSON.stringify({ 
@@ -75,6 +81,7 @@ const handler = async (req: Request): Promise<Response> => {
     );
   } catch (error: any) {
     console.error("Error in send-contact-email function:", error);
+    console.error("Error details:", { message: error.message, stack: error.stack });
     return new Response(
       JSON.stringify({ error: error.message }),
       {
