@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -43,7 +42,7 @@ const Post = () => {
             <p className="text-center text-red-400">Error loading post.</p>
           ) : post ? (
             <article className="prose prose-invert lg:prose-xl max-w-none prose-p:text-gray-300 prose-headings:text-white prose-strong:text-white">
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-4">{post.title}</h1>
+              <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-4">{post.title}</h1>
               <div className="text-gray-400 mb-8">
                 <span>By {post.author_name || 'Anonymous'}</span> • <span>{new Date(post.created_at).toLocaleDateString()}</span>
               </div>

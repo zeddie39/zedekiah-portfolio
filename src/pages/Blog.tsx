@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -42,7 +41,7 @@ const Blog = () => {
       <Navigation />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <header className="pt-16 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">My Blog</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">My Blog</h1>
           <p className="mt-4 text-lg text-gray-300">Thoughts, stories, and ideas.</p>
         </header>
 
