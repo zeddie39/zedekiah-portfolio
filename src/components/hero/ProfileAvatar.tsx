@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const placeholderImages = [
   '/me1.jpg',
@@ -8,14 +8,27 @@ const placeholderImages = [
 ];
 
 const ProfileAvatar = () => {
+  const [images, setImages] = useState(placeholderImages);
   const [enlarged, setEnlarged] = useState<number | null>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setImages((prev) => {
+        const newArr = [...prev];
+        const first = newArr.shift();
+        if (first) newArr.push(first);
+        return newArr;
+      });
+    }, 5000); // rotate every 5 seconds
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="flex flex-col gap-4 items-center relative">
       {/* Small avatars */}
-      {placeholderImages.map((src, idx) => (
+      {images.map((src, idx) => (
         <div
-          key={idx}
+          key={src}
           className={`transition-transform duration-300 rounded-full border-4 border-white shadow-lg bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400 p-1 cursor-pointer relative scale-100 z-10 ${idx > 0 ? 'hidden md:block' : ''}`}
           style={{ width: 104, height: 104 }}
           onMouseEnter={() => setEnlarged(idx)}
@@ -40,7 +53,7 @@ const ProfileAvatar = () => {
             onClick={() => setEnlarged(null)}
           >
             <img
-              src={placeholderImages[enlarged]}
+              src={images[enlarged]}
               alt={`Profile ${enlarged + 1}`}
               className="w-full h-full object-cover object-top rounded-full"
             />

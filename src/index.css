@@ -101,3 +101,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .font-molle {
+    font-family: 'Molle', cursive;
+    font-style: italic;
+  }
+
+  .font-pacifico {
+    font-family: 'Pacifico', cursive;
+  }
+}

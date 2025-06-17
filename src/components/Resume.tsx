@@ -1,14 +1,13 @@
-
 import React from 'react';
 import { Download, FileText, Award } from 'lucide-react';
 import Timeline from './Timeline';
 
 const Resume = () => {
   const handleDownload = () => {
-    // Create a link to download the resume
+    // Create a link to download the CV (DOCX)
     const link = document.createElement('a');
-    link.href = '/resume.pdf'; // You'll need to add this file to the public folder
-    link.download = 'Vincent_Zedekiah_Resume.pdf';
+    link.href = '/my%20curriculum%20vitae.docx'; // Use the DOCX file in the public folder
+    link.download = 'Vincent_Zedekiah_CV.docx';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -36,7 +35,7 @@ const Resume = () => {
             className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-[1.02] flex items-center mx-auto"
           >
             <Download size={24} className="mr-3" />
-            Download Full Resume (PDF)
+            Download My CV (DOCX)
           </button>
         </div>
 
