@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { projects } from '@/data/projects.tsx';
@@ -28,7 +27,7 @@ const ProjectDetail = () => {
 
           <header className="mb-12 text-center">
             <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-4">{project.title}</h1>
-            <p className="text-gray-300 text-lg">{project.description}</p>
+            <p className="text-white text-lg">{project.description}</p>
           </header>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -37,7 +36,7 @@ const ProjectDetail = () => {
                 <CardHeader>
                   <CardTitle>Project Overview</CardTitle>
                 </CardHeader>
-                <CardContent className="prose prose-invert max-w-none prose-p:text-gray-300">
+                <CardContent className="prose prose-invert max-w-none prose-p:text-white">
                   <p>{project.long_description}</p>
                 </CardContent>
               </Card>
@@ -45,7 +44,7 @@ const ProjectDetail = () => {
                 <CardHeader>
                   <CardTitle>Challenges & Solutions</CardTitle>
                 </CardHeader>
-                <CardContent className="prose prose-invert max-w-none prose-p:text-gray-300">
+                <CardContent className="prose prose-invert max-w-none prose-p:text-white">
                   <p>{project.challenges}</p>
                 </CardContent>
               </Card>
@@ -61,7 +60,7 @@ const ProjectDetail = () => {
                     <h4 className="font-semibold mb-2">Tech Stack</h4>
                     <div className="flex flex-wrap gap-2">
                       {project.tech.map((tech) => (
-                        <Badge key={tech} variant="secondary" className="bg-purple-500/10 text-purple-300 border-purple-500/20">{tech}</Badge>
+                        <Badge key={tech} variant="secondary" className="bg-purple-500/10 text-white border-purple-500/20">{tech}</Badge>
                       ))}
                     </div>
                   </div>
@@ -71,12 +70,12 @@ const ProjectDetail = () => {
                   </div>
                   <div className="flex space-x-4 pt-2">
                     {project.live && (
-                      <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center text-purple-400 hover:text-purple-300 transition-colors duration-200">
+                      <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center text-white hover:text-purple-300 transition-colors duration-200">
                         <ExternalLink size={16} className="mr-2" /> Live Demo
                       </a>
                     )}
                     {project.github && (
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-400 hover:text-white transition-colors duration-200">
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center text-white hover:text-white transition-colors duration-200">
                         <Github size={16} className="mr-2" /> Source
                       </a>
                     )}

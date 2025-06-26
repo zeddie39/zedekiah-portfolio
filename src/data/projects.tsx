@@ -1,4 +1,3 @@
-
 import { Rocket, Bot, Code, ShoppingCart, Tv, Wrench } from "lucide-react";
 
 export interface Project {
@@ -34,6 +33,7 @@ export const projects: Project[] = [
     featured: true,
     status: "Live Platform",
     icon: <ShoppingCart />,
+    live: "http://ztechelectronics.netlify.app",
   },
   {
     slug: "esp32-wifi-control",
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     challenges: "The main challenge was creating an engaging and visually appealing design that captures the band's energetic style. Integrating various media APIs for music and videos while ensuring fast load times was also a priority.",
     tech: ["React", "Styled Components", "Media APIs", "Contentful CMS"],
     image: "/placeholder.svg",
-    live: "https://wakilisha.com",
+    live: "https://wakilisha.vercel.app/",
     status: "Live Site",
     icon: <Tv />,
   },
